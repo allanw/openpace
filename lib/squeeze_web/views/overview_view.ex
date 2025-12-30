@@ -14,26 +14,18 @@ defmodule SqueezeWeb.OverviewView do
   def improvement_amount(%User{} = user), do: User.improvement_amount(user)
 
   def format_goal(user) do
-    user.user_prefs.duration
+    1.0
     |> format_duration()
   end
 
-  def race_date(%User{user_prefs: %{race_date: nil}}), do: nil
-  def race_date(%User{user_prefs: %{race_date: date}}) do
-    date
-    |> Timex.format!("%b #{Ordinal.ordinalize(date.day)}", :strftime)
-  end
+  def race_date(), do: nil
 
-  def weeks_until_race(%User{user_prefs: %{race_date: nil}}), do: nil
-  def weeks_until_race(%User{user_prefs: %{race_date: date}} = user) do
-    relative_date(user, date)
-  end
+  def weeks_until_race(), do: nil
 
   def weekly_distance(%{year_dataset: dataset, current_user: user}) do
     distance = dataset
     |> List.last()
     |> Map.get(:distance)
-    "#{distance} #{Distances.label(imperial: user.user_prefs.imperial)}"
   end
 
   def weekly_diff(%{year_dataset: dataset}) do

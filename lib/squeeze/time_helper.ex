@@ -5,27 +5,24 @@ defmodule Squeeze.TimeHelper do
 
   alias Squeeze.Accounts.User
 
-  def today(%User{} = user), do: to_date(user, Timex.now)
+  def today(%User{} = user), do: to_date(Timex.now)
 
-  def to_date(%User{} = user, %NaiveDateTime{} = datetime) do
-    to_date(user, Timex.to_datetime(datetime))
+  def to_date(%NaiveDateTime{} = datetime) do
+    to_date(Timex.to_datetime(datetime))
   end
-  def to_date(%User{user_prefs: %{timezone: timezone}}, datetime) do
+  def to_date(datetime) do
     datetime
-    |> Timex.to_datetime(timezone)
     |> Timex.to_date()
   end
 
-  def beginning_of_day(%User{user_prefs: %{timezone: timezone}}, date) do
+  def beginning_of_day(date) do
     date
-    |> Timex.to_datetime(timezone)
     |> Timex.beginning_of_day()
     |> Timex.to_datetime()
   end
 
-  def end_of_day(%User{user_prefs: %{timezone: timezone}}, date) do
+  def end_of_day(date) do
     date
-    |> Timex.to_datetime(timezone)
     |> Timex.end_of_day()
     |> Timex.to_datetime()
   end

@@ -202,8 +202,8 @@ defmodule Squeeze.Dashboard do
   end
 
   defp by_date_range(query, %User{} = user, date_range) do
-    start_at = TimeHelper.beginning_of_day(user, date_range.first)
-    end_at = TimeHelper.end_of_day(user, date_range.last)
+    start_at = TimeHelper.beginning_of_day(date_range.first)
+    end_at = TimeHelper.end_of_day(date_range.last)
     from q in query,
       where: (q.start_at >= ^start_at and q.start_at <= ^end_at) or
              (q.planned_date >= ^date_range.first and q.planned_date <= ^date_range.last)
